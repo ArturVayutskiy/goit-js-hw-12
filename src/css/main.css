@@ -1,0 +1,102 @@
+form {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+
+.search-images {
+    padding: 8px 16px;
+    width: 272px;
+    height: 40px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    color: #808080;
+    padding: 0 16px;
+    border: 1px solid #808080;
+    border-radius: 4px;
+    width: 272px;
+    height: 40px;
+    margin-bottom: 32px;
+}
+
+.search-images:hover {
+  border-color: #000000;
+}
+
+.search-images:focus {
+    border-color: #6c8cff;
+}
+
+
+button {
+    border-radius: 8px;
+    padding: 8px 16px;
+    width: 91px;
+    height: 43px;
+    background: #4e75ff;
+    color: #fff;
+    border: none;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.04em;
+    color: #fff;
+}
+
+.search-button:hover,
+.search-button:focus {
+  background-color: #6c8cff;
+}
+
+
+a {
+    font-family: sans-serif;
+}
+
+.gallery {
+    margin-top: 10px;
+}
+
+img {
+    height: 200px;
+    width: 360px;
+  }
+  
+.gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 24px;
+    column-gap: 24px;
+    list-style: none;
+}
+
+/* Збільшення фото при наведенні на нього
+/* img:hover {
+    transform: scale(1.04);
+    transition: all 0.2s linear
+} */
+
+.sl-wrapper{
+    background: #00000080;
+}
+
+.card-info {
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    text-align: center;
+  }
+
+
+  .card-info p {
+    font-weight: normal;
+  }
+
+  .card-item {
+    border: 1px solid #808080;
+  }
