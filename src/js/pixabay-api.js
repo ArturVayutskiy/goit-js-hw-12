@@ -8,9 +8,12 @@ export function pixabayAPI(images) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: 'true',
+    per_page: 15,
+    page: 1
   });
 
-  return fetch(`${BASE_URL}?${params}`).then(response => {
+  return fetch(`${BASE_URL}?${params}`)
+  .then(response => {
     if (!response.ok) {
       throw new Error(response.statusText);
     }

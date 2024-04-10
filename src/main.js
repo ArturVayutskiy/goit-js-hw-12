@@ -7,14 +7,20 @@ import 'izitoast/dist/css/iziToast.min.css';
 const form = document.querySelector('.search-form');
 const searchInput = document.querySelector('.search-images');
 const loader = document.querySelector('.loader');
+//Кнопка Load More
+const LoadBtn = document.querySelector('.load-more-button');
 
+let page = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
-  form.addEventListener('submit', function(event) {
+  form.addEventListener('submit', function (event) {
     event.preventDefault();
     const value = searchInput.value.trim();
-    if (value === '') {
-      alert('Please enter a search term!');
+    if (value === "") {
+      iziToast.error({
+        message: 'Please enter a search term!',
+        position: 'topRight',
+      });
       return;
     }
 
@@ -36,9 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(error => {
         console.error('Error fetching images:', error);
         throw error;
-      }).finally(() => {
-      loader.style.display = 'none';
-    });
+      })
+      .finally(() => {
+        loader.style.display = 'none';
+      });
     searchInput.value = '';
   });
 });
+
+
+// LoadBtn.addEventListener(click, async () => {
+//   try {
+//     const
+//   }
+// });

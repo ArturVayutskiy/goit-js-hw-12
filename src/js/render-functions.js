@@ -52,4 +52,3 @@ export function renderImages(images) {
   gallery.refresh();
 
 }
-
