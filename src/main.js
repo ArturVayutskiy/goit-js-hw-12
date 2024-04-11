@@ -7,16 +7,19 @@ import 'izitoast/dist/css/iziToast.min.css';
 const form = document.querySelector('.search-form');
 const searchInput = document.querySelector('.search-images');
 const loader = document.querySelector('.loader');
-//Кнопка Load More
-const LoadBtn = document.querySelector('.load-more-button');
+const loadBtn = document.querySelector('.load-more-button');
 
-let page = 1;
+export let page = 1;
+let searchTerm = ''; // Зберігаємо ключове слово пошуку
+let currentImages = []; // Зберігаємо поточну колекцію зображень
+
+loadBtn.style.display = 'none';
 
 document.addEventListener('DOMContentLoaded', () => {
-  form.addEventListener('submit', function (event) {
+  form.addEventListener('submit', async function (event) {
     event.preventDefault();
     const value = searchInput.value.trim();
-    if (value === "") {
+    if (value === '') {
       iziToast.error({
         message: 'Please enter a search term!',
         position: 'topRight',
@@ -26,33 +29,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loader.style.display = 'block';
 
-    pixabayAPI(value)
-      .then(data => {
-        if (data.hits.length === 0) {
-          iziToast.error({
-            title: 'Error!',
-            message:
-              'Sorry, there are no images matching your search query. Please try again!',
-            position: 'topRight',
-          });
-        }
+    try {
+      const data = await pixabayAPI(value, page); // Виклик pixabayAPI з початковою сторінкою 1
+      if (data.hits.length === 0) {
+        iziToast.error({
+          title: 'Error!',
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+          position: 'topRight',
+        });
+      } else {
         renderImages(data.hits);
-      })
-
-      .catch(error => {
-        console.error('Error fetching images:', error);
-        throw error;
-      })
-      .finally(() => {
-        loader.style.display = 'none';
+        loadBtn.style.display = 'block'; // Показати кнопку після отримання результатів
+        searchTerm = value; // Зберігаємо ключове слово пошуку
+        currentImages = data.hits; // Зберігаємо поточну колекцію зображень
+        page = 1; // Скидаємо значення сторінки для нового пошуку
+      }
+    } catch (error) {
+      console.error('Error fetching images:', error);
+      iziToast.error({
+        title: 'Error!',
+        message:
+          'An error occurred while fetching images. Please try again later.',
+        position: 'topRight',
       });
+    } finally {
+      loader.style.display = 'none';
+    }
     searchInput.value = '';
   });
 });
 
+loadBtn.addEventListener('click', async () => {
+  try {
+    loader.style.display = 'block';
+    const data = await pixabayAPI(searchTerm, ++page); // Використовуємо збережене ключове слово пошуку та поточну сторінку
+    if (data.hits.length === 0) {
+      loadBtn.style.display = 'none';
+      iziToast.info({
+        message: "You've reached the end of search results.",
+        position: 'topRight',
+      });
+    } else {
+      currentImages = [...currentImages, ...data.hits]; // Додаємо нові зображення до поточної колекції
+      renderImages(currentImages);
+      const firstImage = document.querySelector('.gallery a');
+      // Scroll
+      const cardHeight = firstImage.getBoundingClientRect().height;
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
+    }
+  } catch (error) {
+    console.log(error);
 
-// LoadBtn.addEventListener(click, async () => {
-//   try {
-//     const
-//   }
-// });
+  } finally {
+    loader.style.display = 'none';
+  }
+});
