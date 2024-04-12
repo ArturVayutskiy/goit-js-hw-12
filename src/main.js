@@ -28,10 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loader.style.display = 'block';
+    // 1. BUG FIX Після того, як новий пошук ініційовано поданням форми, 
+    // сторінка має скинутися до 1, однак змінна page не скидається у слухачі подій пошуку. 
+    // Це призводить до неправильного збільшення номеру сторінки при наступних натисканнях 
+    // кнопки "Завантажити більше".
+    page = 1; 
 
     try {
       const data = await pixabayAPI(value, page); // Виклик pixabayAPI з початковою сторінкою 1
       if (data.hits.length === 0) {
+        // 2. BUGFIX Коли по запиту нічого не знайдено, треба очищувати сторінку від попереднього пошуку.
+        renderImages([]);
+        loadBtn.style.display = 'none';
         iziToast.error({
           title: 'Error!',
           message:
