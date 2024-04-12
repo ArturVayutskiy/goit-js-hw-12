@@ -88,3 +88,4 @@ loadBtn.addEventListener('click', async () => {
     loader.style.display = 'none';
   }
 });
+
