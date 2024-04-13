@@ -74,11 +74,11 @@ img {
     list-style: none;
 }
 
-/* Збільшення фото при наведенні на нього
-/* img:hover {
+  /* Збільшення фото при наведенні на нього */
+img:hover {
     transform: scale(1.04);
     transition: all 0.2s linear
-} */
+}
 
 .sl-wrapper{
     background: #00000080;

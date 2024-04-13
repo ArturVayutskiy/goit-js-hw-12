@@ -11,8 +11,17 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
+    
+}
+
+.arrow-up {
+    font-size: xx-large;
+    position: absolute;
+    right: 11px;
+    top: 5px;
 }
 
 #scrollToTopBtn:hover {
     background-color: #6c8cff; 
+
 }
