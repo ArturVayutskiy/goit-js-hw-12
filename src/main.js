@@ -13,9 +13,11 @@ export let page = 1;
 let searchTerm = ''; // Зберігаємо ключове слово пошуку
 let currentImages = []; // Зберігаємо поточну колекцію зображень
 
-loadBtn.style.display = 'none';
+
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadBtn.style.display = 'none';
+});
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
     const value = searchInput.value.trim();
@@ -66,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     searchInput.value = '';
   });
-});
+
 
 loadBtn.addEventListener('click', async () => {
   try {
@@ -97,3 +99,20 @@ loadBtn.addEventListener('click', async () => {
   }
 });
 
+// SCROLL UP Button
+window.addEventListener('scroll', () => {
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+  if (window.scrollY > 300) { // Відображати кнопку, коли сторінка прокручена вниз на 300 пікселів
+      scrollToTopBtn.style.display = 'block';
+  } else {
+      scrollToTopBtn.style.display = 'none';
+  }
+});
+
+// Слухач подій для кнопки
+document.getElementById('scrollToTopBtn').addEventListener('click', () => {
+  window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Плавна прокрутка вгору
+  });
+});
